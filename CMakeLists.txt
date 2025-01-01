@@ -138,7 +138,20 @@ set_target_properties( godot-cpp
         CXX_VISIBILITY_PRESET hidden    # visibility needs to be the same as the main library
 )
 
+# Set up RTI Connext DDS
+if (DEFINED NDDSHOME)
+    message(STATUS "NDDSHOME set to ${NDDSHOME}")
+elseif (DEFINED ENV{NDDSHOME})
+    set(NDDSHOME $ENV{NDDSHOME} CACHE PATH "Path to RTI Connext DDS install" FORCE)
+else()
+    message(FATAL_ERROR "NDDSHOME (env var) is not set")
+endif()
+set(CMAKE_MODULE_PATH ${NDDSHOME}/resource/cmake)
+set(BUILD_SHARED_LIBS OFF)
+find_package(RTIConnextDDS 7 REQUIRED COMPONENTS core)
+
 target_link_libraries( ${PROJECT_NAME}
     PRIVATE
         godot-cpp
+        RTIConnextDDS::cpp2_api
 )
