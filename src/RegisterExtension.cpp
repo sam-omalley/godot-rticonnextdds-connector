@@ -6,9 +6,10 @@
 #include "godot_cpp/core/defs.hpp"
 #include "godot_cpp/godot.hpp"
 
+#include "DomainParticipant.h"
 #include "Example.h"
 #include "GDExtensionTemplate.h"
-#include "Summator.h"
+#include "ShapeReader.h"
 
 /// @file
 /// Register our classes with Godot.
@@ -35,7 +36,8 @@ namespace
 
         godot::ClassDB::register_class<GDExtensionTemplate>();
 
-        godot::ClassDB::register_class<Summator>();
+        godot::ClassDB::register_class<DomainParticipant>();
+        godot::ClassDB::register_class<ShapeReader>();
     }
 
     /// @brief Called by Godot to let us do any cleanup.

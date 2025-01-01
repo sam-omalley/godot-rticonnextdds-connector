@@ -5,17 +5,19 @@
 #include <dds/core/ddscore.hpp>
 #include <dds/sub/ddssub.hpp>
 
+#include "DomainParticipant.h"
 #include "ShapeType.hpp"
 
 using namespace godot;
 
-class Summator : public Object
+class ShapeReader : public Object
 {
-    GDCLASS( Summator, Object )
+    GDCLASS( ShapeReader, Object )
 
 public:
-    Summator();
-    void hello() const;
+    ShapeReader();
+    void subscribe(const String& topic_name);
+    void set_participant( DomainParticipant *dp );
 
 protected:
     static void _bind_methods();

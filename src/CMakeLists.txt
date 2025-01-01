@@ -7,7 +7,8 @@ target_sources( ${PROJECT_NAME}
         GDExtensionTemplate.h
         GDExtensionTemplate.cpp
         RegisterExtension.cpp
-        Summator.cpp
+        DomainParticipant.cpp
+        ShapeReader.cpp
         ShapeType.cxx
         ShapeTypePlugin.cxx
 )
