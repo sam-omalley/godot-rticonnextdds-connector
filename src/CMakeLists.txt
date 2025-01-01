@@ -7,6 +7,9 @@ target_sources( ${PROJECT_NAME}
         GDExtensionTemplate.h
         GDExtensionTemplate.cpp
         RegisterExtension.cpp
+        Summator.cpp
+        ShapeType.cxx
+        ShapeTypePlugin.cxx
 )
 
 target_include_directories( ${PROJECT_NAME}

@@ -25,7 +25,10 @@ set( CMAKE_EXPORT_COMPILE_COMMANDS ON )
 # Build universal lib on macOS
 # Note that CMAKE_OSX_ARCHITECTURES must be set before project().
 if ( APPLE )
-    set( CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "" )
+    #set( CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "" FORCE )
+    # Unfortunately RTI DDS supports either x86_64 or arm64. I can't find a way of forcing it
+    # to use both.
+    set( CMAKE_OSX_ARCHITECTURES "arm64" CACHE STRING "" FORCE )
 endif()
 
 # Main project information
