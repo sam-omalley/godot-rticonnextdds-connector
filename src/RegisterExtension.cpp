@@ -59,7 +59,7 @@ extern "C"
     /// @param r_initialization the intialization (need more info)
     ///
     /// @returns GDExtensionBool
-    GDExtensionBool GDE_EXPORT GDExtensionInit(
+    GDExtensionBool GDE_EXPORT RtiConnextDdsConnectorInit(
         GDExtensionInterfaceGetProcAddress p_get_proc_address, GDExtensionClassLibraryPtr p_library,
         GDExtensionInitialization *r_initialization )
     {

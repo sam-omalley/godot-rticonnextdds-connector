@@ -4,6 +4,8 @@ cmake_minimum_required( VERSION 3.22 )
 
 message( STATUS "Using CMake ${CMAKE_VERSION}" )
 
+cmake_policy(SET CMP0177 OLD)
+
 # Require out-of-source builds
 file( TO_CMAKE_PATH "${PROJECT_BINARY_DIR}/CMakeLists.txt" LOC_PATH )
 
@@ -27,7 +29,7 @@ if ( APPLE )
 endif()
 
 # Main project information
-project( GDExtensionTemplate
+project(RtiConnextDdsConnector
     LANGUAGES
         CXX
     VERSION
