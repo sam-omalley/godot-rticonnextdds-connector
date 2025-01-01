@@ -37,6 +37,7 @@ namespace
         godot::ClassDB::register_class<GDExtensionTemplate>();
 
         godot::ClassDB::register_class<DomainParticipant>();
+        godot::ClassDB::register_class<Shape>();
         godot::ClassDB::register_class<ShapeReader>();
     }
 
