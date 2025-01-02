@@ -12,8 +12,8 @@ class DomainParticipant : public Object
 
 public:
     DomainParticipant();
+    ~DomainParticipant() override;
     void setup( int domain_id );
-    void teardown();
     void test(DomainParticipant* me);
     dds::domain::DomainParticipant get_participant() const;
 

@@ -66,12 +66,19 @@ ShapeReader::ShapeReader() :
     reader( dds::core::null )
 {
 }
+ShapeReader::~ShapeReader() 
+{
+    reader.close();
+    topic.close();
+    subscriber.close();
+}
 
 void ShapeReader::_bind_methods()
 {
     ClassDB::bind_method( D_METHOD( "set_participant", "dp" ), &ShapeReader::set_participant );
     ClassDB::bind_method( D_METHOD( "subscribe", "topic_name" ), &ShapeReader::subscribe );
-    ClassDB::bind_method( D_METHOD( "read" ), &ShapeReader::read );
+    ClassDB::bind_method( D_METHOD( "get_data" ), &ShapeReader::get_data );
+    ClassDB::bind_method( D_METHOD( "get_dead_data" ), &ShapeReader::get_dead_data );
 }
 void ShapeReader::subscribe( const String &topic_name )
 {
@@ -92,24 +99,50 @@ void ShapeReader::set_participant( DomainParticipant *dp )
     subscriber = dds::sub::Subscriber( participant );
 }
 
-godot::TypedArray<Shape> ShapeReader::read()
+godot::TypedArray<String> ShapeReader::get_dead_data()
 {
-    // Take all samples
-    dds::sub::LoanedSamples<::ShapeTypeExtended> samples = reader.take();
+    dds::sub::status::DataState dead_state( dds::sub::status::SampleState::any(),
+                                            dds::sub::status::ViewState::any(),
+                                            dds::sub::status::InstanceState::not_alive_mask() );
+
+    // Take all dead samples.
+    dds::sub::LoanedSamples<::ShapeTypeExtended> samples =
+        reader.select().state( dead_state ).take();
+
+    godot::TypedArray<godot::String> arr;
+    for ( const auto &sample : samples )
+    {
+        if ( !sample.info().valid() )
+        {
+            ::ShapeTypeExtended key_holder;
+            reader.key_value( key_holder, sample.info().instance_handle() );
+
+            arr.push_back( godot::String( key_holder.color().c_str() ) );
+        }
+    }
+
+    return arr;
+}
+
+godot::TypedArray<Shape> ShapeReader::get_data()
+{
+    auto alive_state = dds::sub::status::DataState::any_data();
+
+    // Take all alive samples.
+    dds::sub::LoanedSamples<::ShapeTypeExtended> samples =
+        reader.select().state( alive_state ).take();
 
     godot::TypedArray<Shape> arr;
     for ( const auto &sample : samples )
     {
-        if ( sample.info().valid() )
-        {
-            Shape *s = memnew( Shape() );
-            auto data = sample.data();
-            s->set_position( Vector2( data.x(), data.y() ) );
-            s->set_size( data.shapesize() );
-            s->set_angle( data.angle() );
-            s->set_name( godot::String( data.color().c_str() ) );
-            arr.push_back( s );
-        }
+        Shape *s = memnew( Shape() );
+
+        auto data = sample.data();
+        s->set_position( Vector2( data.x(), data.y() ) );
+        s->set_size( data.shapesize() );
+        s->set_angle( data.angle() );
+        s->set_name( godot::String( data.color().c_str() ) );
+        arr.push_back( s );
     }
 
     return arr;

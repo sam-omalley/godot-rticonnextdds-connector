@@ -43,9 +43,11 @@ class ShapeReader : public Object
 
 public:
     ShapeReader();
+    ~ShapeReader() override;
     void subscribe( const String &topic_name );
     void set_participant( DomainParticipant *dp );
-    godot::TypedArray<Shape> read();
+    godot::TypedArray<Shape> get_data();
+    godot::TypedArray<String> get_dead_data();
 
 protected:
     static void _bind_methods();
