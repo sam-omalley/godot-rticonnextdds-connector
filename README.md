@@ -2,7 +2,7 @@
 
 A [GDExtension](https://docs.godotengine.org/en/stable/tutorials/scripting/gdextension/index.html) that integrates [RTI Connext DDS](https://www.rti.com/products/connext-dds-professional) into [Godot 4](https://godotengine.org/), exposing DDS publish/subscribe to GDScript.
 
-![Screenshot](screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/sam-omalley/godot-rticonnextdds-connector-demo/main/screenshots/shapes_demo.png)
 
 See [godot-rticonnextdds-connector-demo](https://github.com/sam-omalley/godot-rticonnextdds-connector-demo) for a working example.
 
