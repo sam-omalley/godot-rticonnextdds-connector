@@ -31,3 +31,13 @@ cmake --build ../build_RtiConnextDdsConnector_Linux-x86_64
 ```
 
 Copy the resulting `.so` / `.dll` / `.dylib` into your Godot project's extension folder.
+
+## Using Your Own IDL
+
+The files `ShapeType.cxx`, `ShapeType.hpp`, `ShapeTypePlugin.cxx`, and `ShapeTypePlugin.hpp` are generated from `ShapeType.idl` using `rtiddsgen`, which is bundled with RTI Connext DDS. The pre-generated files are included for convenience, but if you want to adapt this connector for your own DDS types, regenerate them from your own IDL:
+
+```sh
+rtiddsgen -language C++11 YourType.idl
+```
+
+Then replace the ShapeType source files and update `ShapeReader` to match your type.
